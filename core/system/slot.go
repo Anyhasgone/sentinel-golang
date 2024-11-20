@@ -18,6 +18,7 @@ import (
 	"github.com/alibaba/sentinel-golang/core/base"
 	"github.com/alibaba/sentinel-golang/core/stat"
 	"github.com/alibaba/sentinel-golang/core/system_metric"
+	"github.com/alibaba/sentinel-golang/logging"
 )
 
 const (
@@ -93,6 +94,7 @@ func (s *AdaptiveSlot) doCheckRule(rule *Rule) (bool, string, float64) {
 		return true, "", l
 	case CpuUsage:
 		c := system_metric.CurrentCpuUsage()
+		logging.Info("retrieveAndUpdateCpuStat", "cpuPercent", c, "threshold", threshold)
 		if c > threshold {
 			if rule.Strategy != BBR || !checkBbrSimple() {
 				msg = "system cpu usage check blocked"

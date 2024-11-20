@@ -176,6 +176,8 @@ func retrieveAndUpdateCpuStat() {
 		return
 	}
 
+	logging.Info("retrieveAndUpdateCpuStat", "cpuPercent", cpuPercent)
+
 	cpuRatioGauge.Set(cpuPercent)
 
 	currentCpuUsage.Store(cpuPercent)
